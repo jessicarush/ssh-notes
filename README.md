@@ -1,5 +1,22 @@
 # SSH
 
+This is a very brief collection of notes for working with and setting up SSH.
+
+## Table of Contents
+
+<!-- toc -->
+
+- [Basic command](#basic-command)
+- [Setting up SSH keys](#setting-up-ssh-keys)
+- [SSH using a name](#ssh-using-a-name)
+- [Copy Files via SSH](#copy-files-via-ssh)
+- [Transfer Files with rsync](#transfer-files-with-rsync)
+- [Aliases](#aliases)
+
+<!-- tocstop -->
+
+## Basic command
+
 To ssh into another machine:
 ```
 $ ssh username@hostname
