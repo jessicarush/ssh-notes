@@ -95,9 +95,20 @@ To copy a local directory to another computer via ssh:
 scp -r /path/to/local/file username@hostname:/path/to/remote/file
 ```
 
-for example:
+For example:
 ```
 scp -r /Users/jessicarush/Documents/Coding jessica@rush-imac:/Users/jessica/Documents/Coding
+
+scp /Users/jessicarush/Documents/app.db jessica@138.197.151.122:/home/jessica/activity-log/
+```
+
+To copy from the remote location to your local directory:
+```
+scp -r username@hostname:/path/to/remote/file /path/to/local/file
+```
+For example:
+```
+scp -r jessica@138.197.151.122:/home/jessica/activity-log/app.db /Users/jessicarush/Documents
 ```
 
 ## Transfer Files with rsync
