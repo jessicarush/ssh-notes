@@ -81,12 +81,41 @@ You can also copy your public key to places like:
 
 ## SSH using a name
 
-To ssh to a name instead of an IP address, modify your hosts file:
+There are a few ways to ssh to a name instead of an IP address. One way is modify your hosts file:
 ```
 $ sudo nano /etc/hosts
 ```
 
-Add the ip address and the name you want to use to this list.
+Add the ip address and the name you want to use to this list. For example:
+
+```
+10.0.0.15      unoSSD
+```
+
+Another way os to set up an ssh `config` file in `~/.ssh`:
+
+```
+$ touch ~/.ssh/config
+```
+
+The contents should be configured like:
+
+```
+Host unoSSD
+    Hostname 10.0.0.16
+    User pi
+    Port 22
+
+Host dos
+    Hostname 10.0.0.17
+    User pi
+    Port 22
+
+Host tres
+    Hostname 10.0.0.18
+    User pi
+    Port 22
+```
 
 ## Copy Files via SSH
 
