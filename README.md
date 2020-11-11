@@ -11,7 +11,8 @@ This is a very brief collection of notes for working with and setting up SSH.
 - [SSH using a name](#ssh-using-a-name)
 - [Copy Files via SSH](#copy-files-via-ssh)
 - [Transfer Files with rsync](#transfer-files-with-rsync)
-- [Aliases](#aliases)
+- [Manage remote files using Mac OS Finder](#manage-remote-files-using-mac-os-finder)
+- [Side note: bash_aliases](#side-note-bash_aliases)
 
 <!-- tocstop -->
 
@@ -119,6 +120,8 @@ Host tres
 
 ## Copy Files via SSH
 
+`scp` performs a plain linear copy from one location to another.
+
 To copy a local directory to another computer via ssh:
 ```
 scp -r /path/to/local/file username@hostname:/path/to/remote/file
@@ -129,6 +132,8 @@ For example:
 scp -r /Users/jessicarush/Documents/Coding jessica@rush-imac:/Users/jessica/Documents/Coding
 
 scp /Users/jessicarush/Documents/app.db jessica@138.197.151.122:/home/jessica/activity-log/
+
+scp -r my_project_dir/ pi@tres:/home/pi/
 ```
 
 To copy from the remote location to your local directory:
@@ -141,6 +146,8 @@ scp -r jessica@138.197.151.122:/home/jessica/activity-log/app.db /Users/jessicar
 ```
 
 ## Transfer Files with rsync
+
+`rsync` copies files from one location to another using a special transfer algorithm. Most notably, it will check files sizes and modification timestamps to only copy over files that don't match up. It also offers many more command line options to fine tune its behaviour.
 
 To copy from macbook to imac:
 ```
@@ -159,7 +166,61 @@ rsync -r -a -v -e ssh --delete --dry-run /...
 
 see: <https://kyup.com/tutorials/copy-files-rsync-ssh/>
 
-## Aliases
+## Manage remote files using Mac OS Finder
+
+You can view files on a remote computer (i.e. a Raspberry Pi) using the 'Connect to Server...' command in Mac OS. So far I've only tried this with a Raspberry Pi.
+
+1. ssh into your pi and install [netatalk](http://netatalk.sourceforge.net/)
+  ```
+  sudo apt-get install netatalk
+  ```
+
+2. open the config file
+  ```
+  sudo nano /etc/netatalk/afp.conf
+  ```
+
+3. edit the [Homes] section and note that the ';' comments out a line, so you'll need to uncomment the two lines:
+
+  ```
+  ; Netatalk 3.x configuration file
+  ;  
+
+  [Global]
+  ; Global server settings
+
+   [Homes]
+   basedir regex = /home
+
+  ; [My AFP Volume]
+  ; path = /path/to/volume
+
+  ; [My Time Machine Volume]
+  ; path = /path/to/backup
+  ; time machine = yes
+  ```
+
+Close and save the file.
+
+4. Restart Netatalk
+  ```
+  sudo systemctl restart netatalk
+  ```
+  Note you can also stop and start netatalk with these commands:
+  ```
+  sudo /etc/init.d/netatalk stop
+  sudo /etc/init.d/netatalk start
+  ```
+
+5. From your Mac: Go > Connect to Server... and enter the address
+  ```
+  afp://tres.local
+  ```
+  Where tres is my pi's Host name from my .ssh/config. You should also be able to type the ip address here.
+
+  You'll need to enter the user name (pi) and password, then that should be it.
+
+## Side note: bash_aliases
 
 There are a couple of different places were you can create aliases (command-line shortcuts). I use the `.bash_aliases` file.
 
