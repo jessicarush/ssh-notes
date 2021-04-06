@@ -61,7 +61,7 @@ This will generate the keys which you can now see by typing:
 $ cat ~/.ssh/id_rsa.pub
 ```
 
-Copy the key and append it to the authorized_keys file (>> will create the file if it doesn't already exist):
+Copy the key and append it to the authorized_keys file (>> wilpl create the file if it doesn't already exist):
 ```
 $ cat ~/.ssh/id_rsa.pub >> authorized_keys
 ```
@@ -69,6 +69,11 @@ $ cat ~/.ssh/id_rsa.pub >> authorized_keys
 This copies the public key of the machine you're on and authorizes it for the same machine. To copy the key to a different machine use the pipe command and ssh to that machines authorized_keys file:
 ```
 $ cat ~/.ssh/id_rsa.pub | ssh username@hostname "cat >> ~/.ssh/authorized_keys"
+```
+
+or even easier *untested*:
+```
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub username@hostname
 ```
 
 Now when you exit ssh and login again, you won't need to enter passwords for authorized machines. Note, for any machine to be accessed by ssh, you need to enable ssh. On the raspberry pi the option to enable ssh is located in the main preferences. On the Mac, it's located in:
@@ -79,6 +84,13 @@ You can also copy your public key to places like:
 
 - github (see settings > SSH and GPG keys)
 - digital ocean (see settings > security > SSH keys)
+- bitbucket (see personal settings > SSH keys)
+
+Note: if at some point you rebuild the OS on the device you are ssh-ing into, it will have a new 'fingerprint'. You will need to 'forget' the existing RSA key for that host bu using this command:
+
+```
+$ ssh-keygen -R hostname
+```
 
 ## SSH using a name
 
