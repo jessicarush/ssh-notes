@@ -52,13 +52,18 @@ Inside this directory you will need 4 files:
 
 To create your keys if they don't already exist:
 ```
-$ cd ~/.ssh
 $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ```
 
-This will generate the keys which you can now see by typing:
+Note that this command also works on Windows 10, provided you [have OpenSSH installed](https://phoenixnap.com/kb/generate-ssh-key-windows-10).
+
+The above command will generate the keys which you can now see by typing:
 ```
 $ cat ~/.ssh/id_rsa.pub
+```
+or in Windows 10:
+```
+$ cat /mnt/c/Users/usern/.ssh/.id_rsa.pub
 ```
 
 Copy the key and append it to the authorized_keys file (>> wilpl create the file if it doesn't already exist):
