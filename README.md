@@ -91,7 +91,7 @@ You can also copy your public key to places like:
 - digital ocean (see settings > security > SSH keys)
 - bitbucket (see personal settings > SSH keys)
 
-Note: if at some point you rebuild the OS on the device you are ssh-ing into, it will have a new 'fingerprint'. You will need to 'forget' the existing RSA key for that host bu using this command:
+Note: if at some point you rebuild the OS on the device you are ssh-ing into, it will have a new 'fingerprint'. You will need to 'forget' the existing RSA key for that host by using this command:
 
 ```
 $ ssh-keygen -R hostname
