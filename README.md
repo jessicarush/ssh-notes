@@ -97,7 +97,7 @@ Note: if at some point you rebuild the OS on the device you are ssh-ing into, it
 $ ssh-keygen -R hostname
 ```
 
-## SSH using a name
+## SSH using a custom hostname
 
 There are a few ways to ssh to a name instead of an IP address. One way is modify your hosts file:
 ```
@@ -110,7 +110,7 @@ Add the ip address and the name you want to use to this list. For example:
 10.0.0.15      unoSSD
 ```
 
-Another way os to set up an ssh `config` file in `~/.ssh`:
+Another way os to set up a `config` file in `~/.ssh`:
 
 ```
 $ touch ~/.ssh/config
@@ -237,23 +237,70 @@ Close and save the file.
 
   You'll need to enter the user name (pi) and password, then that should be it.
 
-## Side note: bash_aliases
 
-There are a couple of different places were you can create aliases (command-line shortcuts). I use the `.bash_aliases` file.
+## Manage remote files with SSHFS
+
+See: [Mapping Network Drive Over SSH in Windows](http://makerlab.cs.hku.hk/index.php/en/mapping-network-drive-over-ssh-in-windows)
+
+TLDR:
+
+1. Install [WinFsp](https://github.com/billziss-gh/winfsp/releases)
+
+2. Install [SSHFS-Win](https://github.com/billziss-gh/sshfs-win/releases)
+
+3. Map a network drive with `\\sshfs\username@hostanme`, for example:
 
 ```
-$ nano ~/.bash_aliases
+\sshfs\pi@10.0.0.17
 ```
 
-Add your alias like so:
+Done.
+
+
+## SSH Key Forwarding
+
+See: [Linux command line: passing keys using ssh-agent](https://www.youtube.com/watch?v=7Log2jJtQqg)
+
+This is useful when you are ssh-ing into a remote linux box and working with a cloned private github repo. The goal is that we want to use ssh keys to avoid having to type usernames and passwords every time we pull (also, [GitHub will no longer allow this](https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/) as of August, 2021). Rather than adding ssh keys from the remote linux box to our GitHub account, we'd rather use the keys from our local machine, which we'll assume have already been added to our GitHub account.
+
+First start the ssh-agent in the command line:
 ```
-alias sync-coding="rsync -r -a -v -e ssh --delete /Users/jessicarush/Documents/Coding jessica@rush-imac:/Users/jessica/Documents/
+eval $(ssh-agent -s)
 ```
-Reload the aliases in the command-line:
+
+Then add a key to it that we will forward:
 ```
-$ source ~/.bash_aliases
+ssh-add ~/.ssh/id_rsa
 ```
-Run the command:
+
+Confirm that it's been added with the list flag:
 ```
-$ sync-coding
+ssh-add -l
 ```
+
+Now ssh into your remote linux box using the `-A` flag. This flag passes in the keys you just added with `ssh-add`:
+```
+ssh -A username@Hostname
+```
+
+You can run `ssh-add -l` on the remote box to confirm the keys got passed in.
+
+That's it. You should now be able to pull, fetch, clone from GitHub and it will use the keys passed in from your local machine.
+
+To take things further, we can shorten this process by adding the instructions to pass in keys to our `.ssh/config`.
+```
+Host activity-log
+    Hostname 138.197.151.122
+    user jessica
+    ForwardAgent yes
+```
+
+You would still need to run `eval $(ssh-agent -s)` and `ssh-add ~/.ssh/id_rsa` though. If you want to automate that too, add those commands to you `.bashrc`:
+
+```
+# For SSH Key forwarding
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/id_rsa
+```
+
+Don't forget to `.source ~/.bashrc` afterwards.
