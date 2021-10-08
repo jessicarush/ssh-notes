@@ -232,7 +232,9 @@ Close and save the file.
 5. From your Mac: Go > Connect to Server... and enter the address
   ```
   afp://tres.local
+  afp://10.0.0.17
   ```
+
   Where tres is my pi's Host name from my .ssh/config. You should also be able to type the ip address here.
 
   You'll need to enter the user name (pi) and password, then that should be it.
@@ -251,10 +253,12 @@ TLDR:
 3. Map a network drive with `\\sshfs\username@hostanme`, for example:
 
 ```
-\sshfs\pi@10.0.0.17
+\\sshfs\pi@10.0.0.17
 ```
 
 Done.
+
+Note: Some times sshfs will just rabdomly stop working. This is a result of the ``winFSB.launcher`` service stopping. To start it up again search ``services`` in the windows menu, find winFSB.launcher and right-click to start it again.
 
 
 ## SSH Key Forwarding
