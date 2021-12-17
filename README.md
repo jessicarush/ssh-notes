@@ -8,11 +8,12 @@ This is a very brief collection of notes for working with and setting up SSH.
 
 - [Basic command](#basic-command)
 - [Setting up SSH keys](#setting-up-ssh-keys)
-- [SSH using a name](#ssh-using-a-name)
+- [SSH using a custom hostname](#ssh-using-a-custom-hostname)
 - [Copy Files via SSH](#copy-files-via-ssh)
 - [Transfer Files with rsync](#transfer-files-with-rsync)
 - [Manage remote files using Mac OS Finder](#manage-remote-files-using-mac-os-finder)
-- [Side note: bash_aliases](#side-note-bash_aliases)
+- [Manage remote files with SSHFS](#manage-remote-files-with-sshfs)
+- [SSH Key Forwarding](#ssh-key-forwarding)
 
 <!-- tocstop -->
 
