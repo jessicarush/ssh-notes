@@ -75,7 +75,7 @@ or in Windows 10:
 cat /mnt/c/Users/usern/.ssh/.id_rsa.pub
 ```
 
-Copy the key and append it to the authorized_keys file (>> wilpl create the file if it doesn't already exist):
+Copy the key and append it to the authorized_keys file (>> will create the file if it doesn't already exist):
 
 ```bash
 cat ~/.ssh/id_rsa.pub >> authorized_keys
@@ -286,7 +286,7 @@ TLDR:
 
 Done.
 
-Note: Some times sshfs will just rabdomly stop working. This is a result of the ``winFSB.launcher`` service stopping. To start it up again search ``services`` in the windows menu, find winFSB.launcher and right-click to start it again.
+Note: Some times sshfs will just randomly stop working. This is a result of the ``winFSB.launcher`` service stopping. To start it up again search ``services`` in the windows menu, find winFSB.launcher and right-click to start it again.
 
 
 ## SSH Key Forwarding
