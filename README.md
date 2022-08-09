@@ -286,7 +286,7 @@ TLDR:
 
 Done.
 
-Note: Some times sshfs will just randomly stop working. This is a result of the ``winFSB.launcher`` service stopping. To start it up again search ``services`` in the windows menu, find winFSB.launcher and right-click to start it again.
+Note: Some times sshfs will just randomly stop working. This is a result of the ``winFSB.launcher`` service stopping. To start it up again search ``services`` in the windows menu, find winFSP.launcher and right-click to start it again. See [this issue on github](https://github.com/winfsp/sshfs-win/issues/214) for details.
 
 
 ## SSH Key Forwarding
